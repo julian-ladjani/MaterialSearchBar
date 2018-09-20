@@ -47,7 +47,7 @@
                 android:id="@+id/mt_placeholder"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_toLeftOf="@+id/mt_search"
                 android:layout_toRightOf="@+id/mt_nav"
                 android:gravity="center_vertical"
