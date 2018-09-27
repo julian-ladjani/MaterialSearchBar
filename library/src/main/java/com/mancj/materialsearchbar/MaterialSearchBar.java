@@ -92,6 +92,7 @@ public class MaterialSearchBar extends RelativeLayout implements View.OnClickLis
     private boolean menuDividerEnabled;
     private int dividerColor;
     private int searchBarColor;
+    private boolean placeholderEnabled = true;
 
     private CharSequence hintText;
     private CharSequence placeholderText;
@@ -445,17 +446,22 @@ public class MaterialSearchBar extends RelativeLayout implements View.OnClickLis
     public void disableSearch() {
         animateNavIcon();
         searchEnabled = false;
-        Animation out = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
-        Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_right);
-        out.setAnimationListener(this);
-        searchIcon.setVisibility(VISIBLE);
-        inputContainer.startAnimation(out);
-        searchIcon.startAnimation(in);
 
-        if (placeholderText != null) {
-            placeHolder.setVisibility(VISIBLE);
-            placeHolder.startAnimation(in);
+        if (placeholderEnabled) {
+            Animation out = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+            Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_right);
+            out.setAnimationListener(this);
+            searchIcon.setVisibility(VISIBLE);
+            inputContainer.startAnimation(out);
+            searchIcon.startAnimation(in);
+
+            if (placeholderText != null) {
+                placeHolder.setVisibility(VISIBLE);
+                placeHolder.startAnimation(in);
+            }
         }
+
+        searchEdit.clearFocus();
         if (listenerExists())
             onSearchActionListener.onSearchStateChanged(false);
         if (suggestionsVisible) animateSuggestions(getListHeight(false), 0);
@@ -470,14 +476,25 @@ public class MaterialSearchBar extends RelativeLayout implements View.OnClickLis
         searchEnabled = true;
         Animation left_in = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_left);
         Animation left_out = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out_left);
-        left_in.setAnimationListener(this);
-        placeHolder.setVisibility(GONE);
-        inputContainer.setVisibility(VISIBLE);
-        inputContainer.startAnimation(left_in);
+        if (placeholderEnabled) {
+            left_in.setAnimationListener(this);
+            placeHolder.setVisibility(GONE);
+            inputContainer.setVisibility(VISIBLE);
+            inputContainer.startAnimation(left_in);
+        }
+
         if (listenerExists()) {
             onSearchActionListener.onSearchStateChanged(true);
         }
         searchIcon.startAnimation(left_out);
+    }
+
+    public void disablePlaceholder() {
+        placeHolder.setVisibility(GONE);
+        searchIcon.setVisibility(GONE);
+        inputContainer.setVisibility(VISIBLE);
+        searchEdit.clearFocus();
+        placeholderEnabled = false;
     }
 
     private void animateNavIcon() {
