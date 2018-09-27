@@ -542,6 +542,10 @@ public class MaterialSearchBar extends RelativeLayout implements View.OnClickLis
         this.navIcon.setImageResource(navIconResId);
     }
 
+    public void setNavAsArrow() {
+        setNavIcon(R.drawable.ic_arrow_back, R.drawable.ic_arrow_back, R.drawable.ic_arrow_back);
+    }
+
     /**
      * Check if suggestions are shown
      *
