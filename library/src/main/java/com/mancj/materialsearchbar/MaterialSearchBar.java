@@ -1003,6 +1003,10 @@ public class MaterialSearchBar extends RelativeLayout implements View.OnClickLis
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus && !searchEnabled) {
+            enableSearch();
+        }
+
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (hasFocus) {
             imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
