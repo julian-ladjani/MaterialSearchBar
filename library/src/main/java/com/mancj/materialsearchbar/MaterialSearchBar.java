@@ -331,7 +331,10 @@ public class MaterialSearchBar extends RelativeLayout implements View.OnClickLis
             placeHolder.setText(placeholderText);
         }
     }
-
+    public View getCardView(){
+     CardView cardView = (CardView) findViewById(R.id.mb_container);
+     return cardView;
+    }
     //Setup Icon Colors And Drawables
     private void setupIcons() {
         //Drawables
